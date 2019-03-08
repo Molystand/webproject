@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'base_news.html' %}
 
 {% block title %}
     Все статьи
@@ -11,6 +11,7 @@
             <p>{{ item.text_preview }}</p>
             <p>Автор статьи: {{ item.user }}</p>
             <p>Дата публикации: {{ item.publish_date }}</p>
+            <a href="{{ item.get_absolute_url }}">Далее</a>
         </div>
     {% endfor %}
 {% endblock %}
