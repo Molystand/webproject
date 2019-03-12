@@ -5,12 +5,19 @@ User = get_user_model()
 
 
 class Tag(models.Model):
-    title = models.CharField('Тег', max_length=20)
+    title = models.CharField('Тег', max_length=50)
+    slug = models.SlugField('Slug', max_length=50,unique=True)
 
 
     class Meta:
         verbose_name = 'Тег'
         verbose_name_plural = 'Теги'
+
+
+    def get_absolute_url(self):
+        """Ссылка на конкретный тег
+        """
+        return reverse('tag_detail_url', kwargs={'slug': self.slug})
 
 
     def __str__(self):
@@ -27,7 +34,7 @@ class News(models.Model):
     picture_preview_path = models.CharField('Изображение на превью', max_length=150)
     text = models.TextField('Текст статьи')
     publish_date = models.DateTimeField('Дата публикации', auto_now_add=True)
-    #tags =
+    tags = models.ManyToManyField('Tag', blank=True, related_name='news')
 
 
     class Meta:
@@ -36,6 +43,8 @@ class News(models.Model):
 
 
     def get_absolute_url(self):
+        """Ссылка на конкретную статью
+        """
         return reverse('news_detail_url', kwargs={'slug': self.slug})
 
 

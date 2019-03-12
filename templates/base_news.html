@@ -5,16 +5,17 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>
         {% block title %}
+            mydigitalnews
         {% endblock %}
     </title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
-    {% include 'header.html' %}
+    {% include 'includes/header.html' %}
 
     {% block content %}
     {% endblock %}
 
-    {% include 'footer.html' %}
+    {% include 'includes/footer.html' %}
 </body>
 </html>

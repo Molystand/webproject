@@ -1,12 +1,14 @@
 {% extends 'base_news.html' %}
 
 {% block title %}
-    {{ news.title }}
+    {{ news.title }} - {{ block.super }}
 {% endblock %}
 
 {% block content %}
     <h1>{{ news.title }}</h1>
-    <p>
-        {{ news.text }}
-    </p>
+    <div>
+        <p>{{ news.text }}</p>
+        <p>Автор статьи: {{ news.user }}</p>
+        <p>Дата публикации: {{ news.publish_date }}</p>
+    </div>
 {% endblock %}

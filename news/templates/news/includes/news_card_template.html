@@ -1,0 +1,16 @@
+<div>
+    <h3>{{ news.title }}</h3>
+    <div>
+        <p>{{ news.text_preview }}</p>
+        <p>Дата публикации: {{ news.publish_date }}</p>
+        <a href="{{ news.get_absolute_url }}">Далее</a>
+    </div>
+    <div>
+        <ul>
+        {% for tag in news.tags.all %}
+            <li><a href="{{ tag.get_absolute_url }}">{{ tag.title }}</a></li>
+        {% endfor %}
+        </ul>
+    </div>
+    
+</div>
