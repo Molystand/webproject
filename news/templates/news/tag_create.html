@@ -1,0 +1,28 @@
+{% extends 'base_news.html' %}
+
+{% block title %}
+    Создание тега - {{ block.super }}
+{% endblock %}
+
+{% block content %}
+    <form action="{% url 'tag_create_url' %}" method="post">
+        {% csrf_token %}
+        
+        {% for field in form %}
+            {# Блок с ошибками, если таковые есть #}
+            {% if field.errors %}
+                <div>
+                    {{ field.errors }}
+                </div>
+            {% endif %}
+            
+            {# Вывод полей формы #}
+            <div>
+                {{ field.label }}
+                {{ field }}
+            </div>
+        {% endfor %}
+
+        <button type="submit">Создать тег</button>
+    </form>
+{% endblock %}
