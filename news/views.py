@@ -1,9 +1,9 @@
-from django.shortcuts import render, get_object_or_404, redirect
+from django.shortcuts import render
 from django.views.generic import View
 
 from .models import News, Tag
-from .utils import ObjectDetailMixin
-from .forms import TagForm
+from .utils import ObjectDetailMixin, ObjectCreateMixin
+from .forms import TagForm, NewsForm
 
 
 def news_list(request):
@@ -18,6 +18,11 @@ class NewsDetail(ObjectDetailMixin, View):
     template = 'news/news_detail.html'
 
 
+class NewsCreate(ObjectCreateMixin, View):
+    model_form = NewsForm
+    template = 'news/news_create_form.html'
+
+
 def tags_list(request):
     """Все теги
     """
@@ -30,17 +35,6 @@ class TagDetail(ObjectDetailMixin, View):
     template = 'news/tag_detail.html'
 
 
-class TagCreate(View):
-    def get(self, request):
-        form = TagForm()
-        return render(request, 'news/tag_create.html', context={'form': form})
-
-    def post(self, request):
-        bound_form = TagForm(request.POST)
-
-        if bound_form.is_valid():
-            # Если форма валидна, добавляем тег
-            # в базу и переходим на страницу тега
-            new_tag = bound_form.save()
-            return redirect(new_tag)
-        return render(request, 'news/tag_create.html', context={'form': bound_form})
+class TagCreate(ObjectCreateMixin, View):
+    model_form = TagForm
+    template = 'news/tag_create_form.html'

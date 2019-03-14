@@ -1,0 +1,23 @@
+{% extends 'base_news.html' %}
+
+{% block title %}
+    Создание новости - {{ block.super }}
+{% endblock %}
+
+{% block content %}
+    <form action="{% url 'news_create_url' %}" method="post">
+        {% csrf_token %}
+        {% for field in form %}
+            <div>
+                {% if field.errors %}
+                    <div>
+                        {{ field.errors }}
+                    </div>
+                {% endif %}
+                {{ field.label }}
+                {{ field }}
+            </div>
+        {% endfor %}
+        <button type="submit">Создать пост</button>
+    </form>
+{% endblock %}

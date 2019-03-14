@@ -1,6 +1,7 @@
 from django import forms
 from django.core.exceptions import ValidationError
-from .models import Tag
+from .models import Tag, News
+
 
 class TagForm(forms.ModelForm):
     class Meta:
@@ -14,7 +15,6 @@ class TagForm(forms.ModelForm):
             'slug': forms.TextInput(attrs={'class': 'myclass'})
         }
 
-
     def clean_slug(self):
         new_slug = self.cleaned_data['slug'].lower()
 
@@ -23,3 +23,26 @@ class TagForm(forms.ModelForm):
         if Tag.objects.filter(slug__iexact=new_slug).count():
             raise ValidationError('Slug не уникален. Уже есть slug "{}"'.format(new_slug))
         return new_slug
+
+
+class NewsForm(forms.ModelForm):
+    class Meta:
+        model = News
+        fields = ['user', 'title', 'slug', 'text_preview', 'picture_preview_path', 'text', 'tags']
+
+        widgets = {
+            'user': forms.Select(attrs={'class': 'myclass'}),
+            'title': forms.TextInput(attrs={'class': 'myclass'}),
+            'slug': forms.TextInput(attrs={'class': 'myclass'}),
+            'text_preview': forms.Textarea(attrs={'class': 'myclass'}),
+            'picture_preview_path': forms.TextInput(attrs={'class': 'myclass'}),
+            'text': forms.Textarea(attrs={'class': 'myclass'}),
+            'tags': forms.SelectMultiple(attrs={'class': 'myclass'})
+        }
+
+        def clean_slug(self):
+            new_slug = self.cleaned_data['slug'].lower()
+
+            if new_slug == 'create':
+                raise ValidationError('Slug не может иметь значение "Create"')
+            return new_slug
