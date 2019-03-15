@@ -1,0 +1,14 @@
+{% extends 'base_news.html' %}
+
+{% block title %}
+    Удаление тега "{{ tag.title|title }}" - {{ block.super }}
+{% endblock %}
+
+{% block content %}
+    <form action="{% url 'tag_delete_url' slug=tag.slug %}" method="post">
+        {% csrf_token %}
+        <h3>Удалить тег <b>"{{ tag.title|title }}"</b>?</h3>
+        <a href="{{ tag.get_absolute_url }}">Отмена</a>
+        <button type="submit">Удалить</button>
+    </form>
+{% endblock %}
