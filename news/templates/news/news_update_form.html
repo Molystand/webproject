@@ -1,0 +1,23 @@
+{% extends 'base_news.html' %}
+
+{% block title %}
+    Изменение новости {{ news.title }} - {{ block.super }}
+{% endblock %}
+
+{% block content %}
+    <form action="{% url 'news_update_url' slug=news.slug %}" method="post">
+        {% csrf_token %}
+        {% for field in form %}
+            <div>
+                {% if field.errors %}
+                    <div>
+                        {{ field.errors }}
+                    </div>
+                {% endif %}
+                {{ field.label }}
+                {{ field }}
+            </div>
+        {% endfor %}
+        <button type="submit">Изменить пост</button>
+    </form>
+{% endblock %}
