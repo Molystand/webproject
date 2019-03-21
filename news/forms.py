@@ -1,6 +1,6 @@
 from django import forms
 from django.core.exceptions import ValidationError
-from .models import Tag, News
+from .models import Tag, News, Comment
 
 
 class TagForm(forms.ModelForm):
@@ -46,3 +46,13 @@ class NewsForm(forms.ModelForm):
             if new_slug == 'create':
                 raise ValidationError('Slug не может иметь значение "Create"')
             return new_slug
+
+
+class CommentForm(forms.ModelForm):
+    class Meta:
+        model = Comment
+        fields = ['text']
+
+        widgets = {
+            'user': forms.Textarea(attrs={'class': 'myclass'})
+        }

@@ -5,6 +5,7 @@ from django.shortcuts import reverse
 from django.utils.text import slugify
 from time import time
 
+
 User = get_user_model()
 
 
@@ -24,6 +25,7 @@ class Tag(models.Model):
     class Meta:
         verbose_name = 'Тег'
         verbose_name_plural = 'Теги'
+        ordering = ['title']
 
     def get_absolute_url(self):
         """Ссылка на конкретный тег
@@ -47,6 +49,7 @@ class News(models.Model):
     class Meta:
         verbose_name = 'Статья'
         verbose_name_plural = 'Статьи'
+        ordering = ['-publish_date']
 
     def get_absolute_url(self):
         """Ссылка на конкретную статью
@@ -65,3 +68,18 @@ class News(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class Comment(models.Model):
+    user = models.ForeignKey(User, verbose_name='Автор', on_delete=models.CASCADE)
+    news = models.ForeignKey(News, verbose_name='Новость', on_delete=models.CASCADE)
+    text = models.TextField('Комментарий')
+    publish_date = models.DateTimeField('Дата написания', auto_now_add=True)
+
+    class Meta:
+        verbose_name = 'Комментарий'
+        verbose_name_plural = 'Комментарии'
+        ordering = ['-publish_date']
+
+    def __str__(self):
+        return self.user.__str__()

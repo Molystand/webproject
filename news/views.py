@@ -2,9 +2,9 @@ from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.views.generic import View
 
-from .models import News, Tag
+from .models import News, Tag, Comment
 from .utils import ObjectDetailMixin, ObjectCreateMixin, ObjectUpdateMixin, ObjectDeleteMixin
-from .forms import TagForm, NewsForm
+from .forms import TagForm, NewsForm, CommentForm
 
 
 def news_list(request):
@@ -63,11 +63,3 @@ class TagDelete(ObjectDeleteMixin, View):
     model = Tag
     template = 'news/tag_delete_form.html'
     redirect_url = 'tags_list_url'
-    # def get(self, request, slug):
-    #     tag = Tag.objects.get(slug__iexact=slug)
-    #     return render(request, 'news/tag_delete_form.html', context={'tag': tag})
-    #
-    # def post(self, request, slug):
-    #     tag = Tag.objects.get(slug__iexact=slug)
-    #     tag.delete()
-    #     return redirect(reverse('tags_list_url'))

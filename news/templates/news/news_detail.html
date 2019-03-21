@@ -1,4 +1,4 @@
-{% extends 'base_news.html' %}
+{% extends 'base.html' %}
 
 {% block title %}
     {{ news.title }} - {{ block.super }}
@@ -11,4 +11,13 @@
         <p>Автор статьи: {{ news.user }}</p>
         <p>Дата публикации: {{ news.publish_date }}</p>
     </div>
+
+    <h3>Комментарии</h3>
+    {% for comment in news.comment_set.all %}
+        <div>
+            {{ comment.user }} <br>
+            {{ comment.text }} <br><br>
+        </div>
+    {% endfor %}
+    
 {% endblock %}
