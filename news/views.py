@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 from django.views.generic import View
 
@@ -14,9 +14,26 @@ def news_list(request):
     return render(request, 'news/index.html', context={'news': news})
 
 
-class NewsDetail(ObjectDetailMixin, View):
-    model = News
-    template = 'news/news_detail.html'
+# class NewsDetail(ObjectDetailMixin, View):
+#     model = News
+#     template = 'news/news_detail.html'
+class NewsDetail(View):
+    def get(self, request, slug):
+        news = get_object_or_404(News, slug__iexact=slug)
+        comments = Comment.objects.filter(news=news)
+        form = CommentForm()
+        return render(request, 'news/news_detail.html', context={'news': news, 'comments': comments, 'form': form})
+
+    def post(self, request, slug):
+        bound_form = CommentForm(request.POST)
+
+        if bound_form.is_valid():
+            new_comment = bound_form.save(commit=False)
+            new_comment.news = News.objects.get(slug__iexact=slug)
+            new_comment.user = request.user
+            new_comment.save()
+            return redirect('news_detail_url', slug)
+        return render(request, 'news/news_detail.html', context={'form': bound_form})
 
 
 class NewsCreate(ObjectCreateMixin, View):

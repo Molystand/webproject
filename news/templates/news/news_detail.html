@@ -13,11 +13,20 @@
     </div>
 
     <h3>Комментарии</h3>
-    {% for comment in news.comment_set.all %}
+    {% for comment in comments %}
         <div>
             {{ comment.user }} <br>
             {{ comment.text }} <br><br>
         </div>
     {% endfor %}
-    
+
+    <form action="" method="post">
+        {% csrf_token %}
+        {% for field in form %}
+            <div>
+                {{ field }}
+            </div>
+        {% endfor %}
+        <button type="submit">Оставить комментарий</button>
+    </form>
 {% endblock %}
