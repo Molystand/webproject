@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Вход - {{ block.super }}
+{% endblock %}
+
+{% block content %}
+    <form action="" method="post">
+        {% csrf_token %}
+        {% for field in form %}
+            <div>
+                <label for="">{{ field.label }}</label>
+                <div>{{ field }}</div>
+                {% if field.errors %}
+                    <div>
+                        {{ field.errors }}
+                    </div>
+                {% endif %}
+            </div>
+        {% endfor %}
+        <button type="submit">Войти</button>
+    </form>
+{% endblock %}

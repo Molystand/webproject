@@ -13,4 +13,7 @@ urlpatterns = [
     path('tag/<str:slug>/', TagDetail.as_view(), name='tag_detail_url'),
     path('tag/<str:slug>/update/', TagUpdate.as_view(), name='tag_update_url'),
     path('tag/<str:slug>/delete/', TagDelete.as_view(), name='tag_delete_url'),
+    path('login/', Login.as_view(), name='login_url'),
+    path('registration/', Registration.as_view(), name='registration_url'),
+    path('logout/', Logout.as_view(), name='logout_url')
 ]

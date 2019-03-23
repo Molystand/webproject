@@ -1,4 +1,11 @@
 <div>
     <a href="{% url 'news_list_url' %}">Новости</a>
     <a href="{% url 'tags_list_url' %}">Теги</a>
+
+    {% if user.is_authenticated %}
+        <a href="{% url 'logout_url' %}">Выйти</a>
+    {% else %}
+        <a href="{% url 'login_url' %}">Вход</a>
+        <a href="{% url 'registration_url' %}">Регистрация</a>
+    {% endif %}
 </div>

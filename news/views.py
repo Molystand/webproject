@@ -1,6 +1,11 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 from django.views.generic import View
+from django.views.generic.edit import FormView
+from django.contrib.auth import login, logout
+from django.contrib.auth.views import LogoutView
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django.http import HttpResponse
 
 from .models import News, Tag, Comment
 from .utils import ObjectDetailMixin, ObjectCreateMixin, ObjectUpdateMixin, ObjectDeleteMixin
@@ -12,11 +17,13 @@ def news_list(request):
     """
     news = News.objects.all()
     return render(request, 'news/index.html', context={'news': news})
+# class NewsList(View):
+#     def get(self, request):
+#         news = News.objects.all()
+#         user = request.user
 
 
-# class NewsDetail(ObjectDetailMixin, View):
-#     model = News
-#     template = 'news/news_detail.html'
+
 class NewsDetail(View):
     def get(self, request, slug):
         news = get_object_or_404(News, slug__iexact=slug)
@@ -80,3 +87,36 @@ class TagDelete(ObjectDeleteMixin, View):
     model = Tag
     template = 'news/tag_delete_form.html'
     redirect_url = 'tags_list_url'
+
+
+class Login(FormView):
+    form_class = AuthenticationForm
+    template_name = 'news/login_form.html'
+    success_url = '/'
+
+    def form_valid(self, form):
+        self.user = form.get_user()
+        login(self.request, self.user)
+        return super(Login, self).form_valid(form)
+
+    def form_invalid(self, form):
+        return super(Login, self).form_invalid(form)
+
+
+class Registration(FormView):
+    form_class = UserCreationForm
+    template_name = 'news/registration_form.html'
+    success_url = '/login/'
+
+    def form_valid(self, form):
+        form.save()
+        return super(Registration, self).form_valid(form)
+
+    def form_invalid(self, form):
+        return super(Registration, self).form_invalid(form)
+
+
+class Logout(View):
+    def get(self, request):
+        logout(request)
+        return redirect('news_list_url', permanent=True)
