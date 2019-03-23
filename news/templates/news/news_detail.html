@@ -21,13 +21,16 @@
         </div>
     {% endfor %}
 
-    <form action="" method="post">
-        {% csrf_token %}
-        {% for field in form %}
-            <div>
-                {{ field }}
-            </div>
-        {% endfor %}
-        <button type="submit">Оставить комментарий</button>
-    </form>
+    {% if user.is_authenticated %}
+        <form action="" method="post">
+            {% csrf_token %}
+            {% for field in form %}
+                <div>
+                    {{ field }}
+                </div>
+            {% endfor %}
+            <button type="submit">Оставить комментарий</button>
+        </form>
+    {% endif %}
+
 {% endblock %}

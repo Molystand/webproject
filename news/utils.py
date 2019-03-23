@@ -21,6 +21,7 @@ class ObjectCreateMixin:
 
     def post(self, request):
         bound_form = self.model_form(request.POST)
+        bound_form.instance.user = self.request.user
 
         if bound_form.is_valid():
             # Если форма валидна, добавляем объект

@@ -17,11 +17,6 @@ def news_list(request):
     """
     news = News.objects.all()
     return render(request, 'news/index.html', context={'news': news})
-# class NewsList(View):
-#     def get(self, request):
-#         news = News.objects.all()
-#         user = request.user
-
 
 
 class NewsDetail(View):
@@ -119,4 +114,4 @@ class Registration(FormView):
 class Logout(View):
     def get(self, request):
         logout(request)
-        return redirect('news_list_url', permanent=True)
+        return redirect('news_list_url')

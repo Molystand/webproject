@@ -28,7 +28,7 @@ class TagForm(forms.ModelForm):
 class NewsForm(forms.ModelForm):
     class Meta:
         model = News
-        fields = ['user', 'title', 'slug', 'text_preview', 'picture_preview_path', 'text', 'tags']
+        fields = ['title', 'slug', 'text_preview', 'picture_preview_path', 'text', 'tags']
 
         widgets = {
             'user': forms.Select(attrs={'class': 'myclass'}),
