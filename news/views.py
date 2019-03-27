@@ -7,7 +7,7 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 
 from .models import News, Tag, Comment
 from .utils import ObjectDetailMixin, ObjectCreateMixin, ObjectUpdateMixin, ObjectDeleteMixin
-from .forms import TagForm, NewsForm, CommentForm
+from .forms import TagForm, NewsForm, CommentForm, UserRegistrationForm, UserLoginForm
 
 
 def news_list(request):
@@ -84,7 +84,7 @@ class TagDelete(ObjectDeleteMixin, View):
 
 
 class Login(FormView):
-    form_class = AuthenticationForm
+    form_class = UserLoginForm
     template_name = 'news/login_form.html'
     success_url = '/'
 
@@ -98,7 +98,7 @@ class Login(FormView):
 
 
 class Registration(FormView):
-    form_class = UserCreationForm
+    form_class = UserRegistrationForm
     template_name = 'news/registration_form.html'
     success_url = '/login/'
 
