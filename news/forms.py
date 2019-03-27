@@ -28,14 +28,14 @@ class TagForm(forms.ModelForm):
 class NewsForm(forms.ModelForm):
     class Meta:
         model = News
-        fields = ['title', 'slug', 'text_preview', 'picture_preview_path', 'text', 'tags']
+        fields = ['title', 'slug', 'text_preview', 'text', 'tags']
 
         widgets = {
-            'user': forms.Select(attrs={'class': 'myclass'}),
+            # 'user': forms.Select(attrs={'class': 'myclass'}),
             'title': forms.TextInput(attrs={'class': 'myclass'}),
             'slug': forms.TextInput(attrs={'class': 'myclass'}),
             'text_preview': forms.Textarea(attrs={'class': 'myclass'}),
-            'picture_preview_path': forms.TextInput(attrs={'class': 'myclass'}),
+            # 'picture_preview_path': forms.TextInput(attrs={'class': 'myclass'}),
             'text': forms.Textarea(attrs={'class': 'myclass'}),
             'tags': forms.SelectMultiple(attrs={'class': 'myclass'})
         }

@@ -3,9 +3,7 @@ from django.urls import reverse
 from django.views.generic import View
 from django.views.generic.edit import FormView
 from django.contrib.auth import login, logout
-from django.contrib.auth.views import LogoutView
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
-from django.http import HttpResponse
 
 from .models import News, Tag, Comment
 from .utils import ObjectDetailMixin, ObjectCreateMixin, ObjectUpdateMixin, ObjectDeleteMixin
@@ -24,7 +22,8 @@ class NewsDetail(View):
         news = get_object_or_404(News, slug__iexact=slug)
         comments = Comment.objects.filter(news=news)
         form = CommentForm()
-        return render(request, 'news/news_detail.html', context={'news': news, 'comments': comments, 'form': form})
+        return render(request, 'news/news_detail.html', context={'news': news, 'comments': comments, 'form': form,
+                                                                 'admin_object': news, 'detail': True})
 
     def post(self, request, slug):
         bound_form = CommentForm(request.POST)

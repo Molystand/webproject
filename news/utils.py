@@ -8,7 +8,8 @@ class ObjectDetailMixin:
 
     def get(self, request, slug):
         obj = get_object_or_404(self.model, slug__iexact=slug)
-        return render(request, self.template, context={self.model.__name__.lower(): obj})
+        return render(request, self.template, context={self.model.__name__.lower(): obj,
+                                                       'admin_object': obj, 'detail': True})
 
 
 class ObjectCreateMixin:
@@ -17,6 +18,10 @@ class ObjectCreateMixin:
 
     def get(self, request):
         form = self.model_form()
+        # Проверка прав пользователя (через группу),
+        # редирект на главную, если прав недостаточно
+        if not (request.user.groups.filter(name='Editors').exists() or request.user.is_staff):
+            return redirect('news_list_url')
         return render(request, self.template, context={'form': form})
 
     def post(self, request):
@@ -39,6 +44,10 @@ class ObjectUpdateMixin:
     def get(self, request, slug):
         obj = self.model.objects.get(slug__iexact=slug)
         bound_form = self.model_form(instance=obj)
+        # Проверка прав пользователя (должен быть админом),
+        # редирект на главную, если прав недостаточно
+        if not request.user.is_staff:
+            return redirect('news_list_url')
         return render(request, self.template, context={'form': bound_form, self.model.__name__.lower(): obj})
 
     def post(self, request, slug):
@@ -58,6 +67,10 @@ class ObjectDeleteMixin:
 
     def get(self, request, slug):
         obj = self.model.objects.get(slug__iexact=slug)
+        # Проверка прав пользователя (должен быть админом),
+        # редирект на главную, если прав недостаточно
+        if not request.user.is_staff:
+            return redirect('news_list_url')
         return render(request, self.template, context={self.model.__name__.lower(): obj})
 
     def post(self, request, slug):

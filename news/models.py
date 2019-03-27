@@ -32,6 +32,12 @@ class Tag(models.Model):
         """
         return reverse('tag_detail_url', kwargs={'slug': self.slug})
 
+    def get_update_url(self):
+        return reverse('tag_update_url', kwargs={'slug': self.slug})
+
+    def get_delete_url(self):
+        return reverse('tag_delete_url', kwargs={'slug': self.slug})
+
     def __str__(self):
         return self.title
 
@@ -41,7 +47,7 @@ class News(models.Model):
     title = models.CharField('Заголовок', max_length=120)
     slug = models.SlugField('Slug', max_length=120, blank=True, unique=True)
     text_preview = models.TextField('Текстовое превью', max_length=350)
-    picture_preview_path = models.CharField('Изображение на превью', max_length=150)
+    # picture_preview_path = models.CharField('Изображение на превью', max_length=150)
     text = models.TextField('Текст статьи')
     publish_date = models.DateTimeField('Дата публикации', auto_now_add=True)
     tags = models.ManyToManyField('Tag', blank=True, related_name='news')
@@ -55,6 +61,12 @@ class News(models.Model):
         """Ссылка на конкретную статью
         """
         return reverse('news_detail_url', kwargs={'slug': self.slug})
+
+    def get_update_url(self):
+        return reverse('news_update_url', kwargs={'slug': self.slug})
+
+    def get_delete_url(self):
+        return reverse('news_delete_url', kwargs={'slug': self.slug})
 
     def save(self, *args, **kwargs):
         """Переопределение функции сохранения,
