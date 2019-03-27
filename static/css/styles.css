@@ -19,3 +19,7 @@
 a.edit, a.delete {
     display: none;
 }
+
+a.tags {
+    font-size: smaller;
+}

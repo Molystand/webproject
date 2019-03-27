@@ -5,10 +5,10 @@
 {% endblock %}
 
 {% block content %}
-    <h1>Теги:</h1>
+    <h2 class="mb-4">Теги:</h2>
 
     {% for tag in tags %}
-        <h3><a href="{{ tag.get_absolute_url }}">{{ tag.title }}</a></h3>
+        <h4><a class="badge badge-info" href="{{ tag.get_absolute_url }}">{{ tag.title }}</a></h4>
     {% endfor %}
 
 {% endblock %}

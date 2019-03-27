@@ -1,15 +1,13 @@
-<div>
-    <h3>{{ news.title }}</h3>
-    <div>
-        <p>{{ news.text_preview }}</p>
-        <p>Дата публикации: {{ news.publish_date }}</p>
-        <a href="{{ news.get_absolute_url }}">Далее</a>
+<div class="card border-dark mb-4">
+    <div class="card-header">{{ news.publish_date }}</div>
+    <div class="card-body text-dark">
+        <h4 class="card-title">{{ news.title }}</h4>
+        <p class="card-text">{{ news.text_preview }}</p>
+        <a href="{{ news.get_absolute_url }}" class="btn btn-dark">Далее</a>
     </div>
-    <div>
-        <ul>
+    <div class="card-footer text-muted">
         {% for tag in news.tags.all %}
-            <li><a href="{{ tag.get_absolute_url }}">{{ tag.title }}</a></li>
+            #<a class="tags" href="{{ tag.get_absolute_url }}">{{ tag.title }}</a>
         {% endfor %}
-        </ul>
     </div>
 </div>

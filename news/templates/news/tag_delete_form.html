@@ -7,8 +7,8 @@
 {% block content %}
     <form action="{{ tag.get_delete_url }}" method="post">
         {% csrf_token %}
-        <h3>Удалить тег <b>"{{ tag.title|title }}"</b>?</h3>
+        <h4>Удалить тег <b>"{{ tag.title|title }}"</b>?</h4>
         <a href="{{ tag.get_absolute_url }}">Отмена</a>
-        <button type="submit">Удалить</button>
+        <button type="submit" class="btn btn-danger">Удалить</button>
     </form>
 {% endblock %}

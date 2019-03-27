@@ -5,19 +5,29 @@
 {% endblock %}
 
 {% block content %}
-    <h1>{{ news.title }}</h1>
-    <div>
-        <p>{{ news.text }}</p>
-        <p>Автор статьи: {{ news.user }}</p>
-        <p>Дата публикации: {{ news.publish_date }}</p>
+    <h2>{{ news.title }}</h2>
+    <div class="mb-4">
+        <div>
+            <span class="mr-3">{{ news.user }}</span>
+            <span>{{ news.publish_date }}</span>
+        </div>
+        {% for tag in news.tags.all %}
+            #<a class="tags" href="{{ tag.get_absolute_url }}">{{ tag.title }}</a>
+        {% endfor %}
     </div>
 
-    <h3>Комментарии</h3>
+    <div class="text-justify mb-4">
+        <p>{{ news.text|linebreaksbr }}</p>
+    </div>
+
+    <h4 class="mb-3">Комментарии</h4>
     {% for comment in comments %}
-        <div>
-            {{ comment.user }} <br>
-            {{ comment.text }} <br>
-            {{ comment.publish_date }}<br><br>
+        <div class="card mb-3">
+            <div class="card-body text-dark">
+                <h5 class="card-title">{{ comment.user }}</h5>
+                <h6 class="card-subtitle text-muted mb-2">{{ comment.publish_date }}</h6>
+                <p class="card-text">{{ comment.text }}</p>
+            </div>
         </div>
     {% endfor %}
 
@@ -25,11 +35,11 @@
         <form action="" method="post">
             {% csrf_token %}
             {% for field in form %}
-                <div>
+                <div class="form-group">
                     {{ field }}
                 </div>
             {% endfor %}
-            <button type="submit">Оставить комментарий</button>
+            <button type="submit" class="btn btn-dark">Оставить комментарий</button>
         </form>
     {% endif %}
 
