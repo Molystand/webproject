@@ -9,6 +9,6 @@
         {% csrf_token %}
         <h4>Удалить новость <b>"{{ news.title|title }}"</b>?</h4>
         <a href="{{ news.get_absolute_url }}">Отмена</a>
-        <button type="submit" class="btn btn-danger">Удалить</button>
+        <button type="submit" class="btn btn-danger" name="delete-news">Удалить</button>
     </form>
 {% endblock %}

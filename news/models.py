@@ -20,7 +20,7 @@ def gen_slug(s):
 
 class Tag(models.Model):
     title = models.CharField('Тег', max_length=50)
-    slug = models.SlugField('Slug', max_length=50, unique=True)
+    slug = models.SlugField('Slug', max_length=50, unique=True, allow_unicode=True)
 
     class Meta:
         verbose_name = 'Тег'
@@ -45,7 +45,7 @@ class Tag(models.Model):
 class News(models.Model):
     user = models.ForeignKey(User, verbose_name='Автор', on_delete=models.CASCADE)
     title = models.CharField('Заголовок', max_length=120)
-    slug = models.SlugField('Slug', max_length=120, blank=True, unique=True)
+    slug = models.SlugField('Slug', max_length=120, blank=True, unique=True, allow_unicode=True)
     text_preview = models.TextField('Текстовое превью', max_length=350)
     # picture_preview_path = models.CharField('Изображение на превью', max_length=150)
     text = models.TextField('Текст статьи')

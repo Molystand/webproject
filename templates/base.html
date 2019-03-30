@@ -28,12 +28,12 @@
 
     {% if user.groups.all.0.name == 'Editors' or user.is_staff %}
         <div class="admin-panel align-items-center">
-            <a href="{% url 'news_create_url' %}" class="btn btn-light">Создать новость</a>
-            <a href="{% url 'tag_create_url' %}" class="btn btn-light">Создать тег</a>
+            <a href="{% url 'news_create_url' %}" class="btn btn-light" name="panel-create-news">Создать новость</a>
+            <a href="{% url 'tag_create_url' %}" class="btn btn-light" name="panel-create-tag">Создать тег</a>
             {% if user.is_staff %}
-                <a href="{{ admin_object.get_update_url }}" class="btn btn-light edit"
+                <a href="{{ admin_object.get_update_url }}" class="btn btn-light edit" name="panel-update"
                    style="{% if detail %}display: block;{% endif %}">Изменить</a>
-                <a href="{{ admin_object.get_delete_url }}" class="btn btn-danger delete"
+                <a href="{{ admin_object.get_delete_url }}" class="btn btn-danger delete" name="panel-delete"
                    style="{% if detail %}display: block;{% endif %}">Удалить</a>
             {% endif %}
         </div>

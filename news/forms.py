@@ -34,7 +34,7 @@ class NewsForm(forms.ModelForm):
         widgets = {
             # 'user': forms.Select(attrs={'class': 'myclass'}),
             'title': forms.TextInput(attrs={'class': 'form-control'}),
-            'slug': forms.TextInput(attrs={'class': 'form-control'}),
+            'slug': forms.TextInput(attrs={'class': 'form-control', 'allow_unicode': 'True'}),
             'text_preview': forms.Textarea(attrs={'class': 'form-control'}),
             # 'picture_preview_path': forms.TextInput(attrs={'class': 'myclass'}),
             'text': forms.Textarea(attrs={'class': 'form-control'}),
